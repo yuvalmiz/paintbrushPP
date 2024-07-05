@@ -1,0 +1,32 @@
+2024-07-05 06:20:56 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 06:25:57 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 06:29:55 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 06:31:04 	Done.
+2024-07-05 06:31:04 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 06:31:04 	Done!
+2024-07-05 06:31:04 Loading frequency encoding (compiling might take a while)...
+2024-07-05 06:31:04 	Done!
+2024-07-05 06:31:04 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 06:31:04 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 06:31:04 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 06:31:04 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 06:31:06 	 successfully loaded stable diffusion!
+2024-07-05 06:31:06 Successfully initialized sand_castle
+2024-07-05 06:31:06 Starting training ^_^
+2024-07-05 06:31:06 Evaluating and saving model, iteration #0...
