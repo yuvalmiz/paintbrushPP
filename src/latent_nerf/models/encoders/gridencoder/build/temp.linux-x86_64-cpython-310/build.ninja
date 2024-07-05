@@ -23,8 +23,8 @@ rule cuda_compile
 
 
 
-build /net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/gridencoder/build/temp.linux-x86_64-cpython-310/net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/gridencoder/src/bindings.o: compile /net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/gridencoder/src/bindings.cpp
-build /net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/gridencoder/build/temp.linux-x86_64-cpython-310/net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/gridencoder/src/gridencoder.o: cuda_compile /net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/gridencoder/src/gridencoder.cu
+build /net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/gridencoder/build/temp.linux-x86_64-cpython-310/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/gridencoder/src/bindings.o: compile /net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/gridencoder/src/bindings.cpp
+build /net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/gridencoder/build/temp.linux-x86_64-cpython-310/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/gridencoder/src/gridencoder.o: cuda_compile /net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/gridencoder/src/gridencoder.cu
 
 
 

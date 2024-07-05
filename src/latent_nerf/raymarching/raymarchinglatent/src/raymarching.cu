@@ -500,13 +500,19 @@ void march_rays_train(const at::Tensor rays_o, const at::Tensor rays_d, const at
 template <typename scalar_t>
 __global__ void kernel_composite_rays_train_forward(
     const scalar_t * __restrict__ sigmas,
-    const scalar_t * __restrict__ rgbs,  
+    const scalar_t * __restrict__ rgbs,
+    const scalar_t * __restrict__ loc_prob,
+    const scalar_t * __restrict__ style_rgbs,
+    const scalar_t * __restrict__ beck_rgbs,  
     const scalar_t * __restrict__ deltas,
     const int * __restrict__ rays,
     const uint32_t M, const uint32_t N, const float T_thresh, 
-    scalar_t * weights_sum,
     scalar_t * depth,
-    scalar_t * image
+    scalar_t * weights_sum,
+    scalar_t * image,
+    scalar_t * image_style,
+    scalar_t * image_back,
+    const uint32_t is_localization
 ) {
     // parallel per ray
     const uint32_t n = threadIdx.x + blockIdx.x * blockDim.x;
@@ -525,19 +531,33 @@ __global__ void kernel_composite_rays_train_forward(
         image[index * (3+1) + 1] = 0;
         image[index * (3+1) + 2] = 0;
         image[index * (3+1) + 3] = 0;
+        image_style[index * (3+1)] = 0;
+        image_style[index * (3+1) + 1] = 0;
+        image_style[index * (3+1) + 2] = 0;
+        image_style[index * (3+1) + 3] = 0;
+        image_back[index * (3+1)] = 0;
+        image_back[index * (3+1) + 1] = 0;
+        image_back[index * (3+1) + 2] = 0;
+        image_back[index * (3+1) + 3] = 0;
         return;
     }
 
     sigmas += offset;
     rgbs += offset * (3+1);
     deltas += offset * 2;
+    if (is_localization) {
+        loc_prob += offset;
+        style_rgbs += offset * (3+1);
+        beck_rgbs += offset * (3+1);
+    }
 
     // accumulate
     uint32_t step = 0;
-
+    // uint32_t r_yellow = 255, g_yellow = 255, b_yellow = 0;
     scalar_t T = 1.0f;
-    scalar_t r = 0, g = 0, b = 0, newvar = 0,ws = 0, t = 0, d = 0;
-
+    scalar_t r = 0, g = 0, b = 0, newvar = 0,ws = 0, t = 0, d = 0 ;
+    scalar_t  r_locallization = 0, g_locallization = 0, b_locallization = 0, r_stylization = 0, g_stylization = 0, b_stylization = 0, r_background = 0, g_background = 0, b_background = 0;
+    scalar_t r_yellow = 255, g_yellow = 255, b_yellow = 0;
     while (step < num_steps) {
 
         const scalar_t alpha = 1.0f - __expf(- sigmas[0] * deltas[0]);
@@ -546,7 +566,23 @@ __global__ void kernel_composite_rays_train_forward(
         r += weight * rgbs[0];
         g += weight * rgbs[1];
         b += weight * rgbs[2];
-        newvar += weight * rgbs[3];
+        newvar += weight * rgbs[3]; // TODO - check what to do with the newvar value
+
+        if (is_localization) {
+            r_locallization += weight * loc_prob[0] * r_yellow + weight * (1 - loc_prob[0]) * rgbs[0]; // TODO - ADD YELLOW COLOR red chanel
+            g_locallization += weight * loc_prob[0] * g_yellow + weight * (1 - loc_prob[0]) * rgbs[1]; // TODO - ADD YELLOW COLOR green chanel
+            b_locallization += weight * loc_prob[0] * b_yellow + weight * (1 - loc_prob[0]) * rgbs[2]; // TODO - ADD YELLOW COLOR blue chanel
+            
+            r_stylization += weight * loc_prob[0] * style_rgbs[0] + weight * (1 - loc_prob[0]) * rgbs[0];
+            g_stylization += weight * loc_prob[0] * style_rgbs[1] + weight * (1 - loc_prob[0]) * rgbs[1];
+            b_stylization += weight * loc_prob[0] * style_rgbs[2] + weight * (1 - loc_prob[0]) * rgbs[2];
+
+            r_background += weight * (1-loc_prob[0]) * beck_rgbs[0] + weight * (loc_prob[0]) * rgbs[0];
+            g_background += weight * (1-loc_prob[0]) * beck_rgbs[1] + weight * (loc_prob[0]) * rgbs[1];
+            b_background += weight * (1-loc_prob[0]) * beck_rgbs[2] + weight * (loc_prob[0]) * rgbs[2];
+
+        }
+
 
         t += deltas[1]; // real delta
         d += weight * t;
@@ -564,6 +600,11 @@ __global__ void kernel_composite_rays_train_forward(
         sigmas++;
         rgbs += (3+1);
         deltas += 2;
+        if (is_localization) {
+            loc_prob++;
+            style_rgbs += (3+1);
+            beck_rgbs += (3+1);
+        }
 
         step++;
     }
@@ -577,16 +618,51 @@ __global__ void kernel_composite_rays_train_forward(
     image[index * (3+1) + 1] = g;
     image[index * (3+1) + 2] = b;
     image[index * (3+1) + 3] = newvar;
+    if (is_localization) {
+        image[index * (3+1)] = r_locallization;
+        image[index * (3+1) + 1] = g_locallization;
+        image[index * (3+1) + 2] = b_locallization;
+        image_style[index * (3+1)] = r_stylization;
+        image_style[index * (3+1) + 1] = g_stylization;
+        image_style[index * (3+1) + 2] = b_stylization;
+        image_style[index * (3+1) + 3] = newvar;
+        image_back[index * (3+1)] = r_background;
+        image_back[index * (3+1) + 1] = g_background;
+        image_back[index * (3+1) + 2] = b_background;
+        image_back[index * (3+1) + 3] = newvar;
+    }
+    
 }
 
 
-void composite_rays_train_forward(const at::Tensor sigmas, const at::Tensor rgbs, const at::Tensor deltas, const at::Tensor rays, const uint32_t M, const uint32_t N, const float T_thresh, at::Tensor weights_sum, at::Tensor depth, at::Tensor image) {
+void composite_rays_train_forward(const at::Tensor sigmas, const at::Tensor rgbs, 
+                                  const at::Tensor loc_prob, const at::Tensor style_rgbs, const at::Tensor beck_rgbs,
+                                  const at::Tensor deltas, const at::Tensor rays, const uint32_t M, const uint32_t N,
+                                  const float T_thresh, 
+                                  at::Tensor weights_sum, at::Tensor depth, at::Tensor image,
+                                  at::Tensor image_style, at::Tensor image_back,
+                                  const uint32_t is_localization) {
 
     static constexpr uint32_t N_THREAD = 128;
 
     AT_DISPATCH_FLOATING_TYPES_AND_HALF(
     sigmas.scalar_type(), "composite_rays_train_forward", ([&] {
-        kernel_composite_rays_train_forward<<<div_round_up(N, N_THREAD), N_THREAD>>>(sigmas.data_ptr<scalar_t>(), rgbs.data_ptr<scalar_t>(), deltas.data_ptr<scalar_t>(), rays.data_ptr<int>(), M, N, T_thresh, weights_sum.data_ptr<scalar_t>(), depth.data_ptr<scalar_t>(), image.data_ptr<scalar_t>());
+        kernel_composite_rays_train_forward<<<div_round_up(N, N_THREAD), N_THREAD>>>(sigmas.data_ptr<scalar_t>(),
+                                                                                     rgbs.data_ptr<scalar_t>(),
+                                                                                     loc_prob.data_ptr<scalar_t>(),
+                                                                                     style_rgbs.data_ptr<scalar_t>(),
+                                                                                     beck_rgbs.data_ptr<scalar_t>(),
+                                                                                     deltas.data_ptr<scalar_t>(),
+                                                                                     rays.data_ptr<int>(),
+                                                                                     M, N, T_thresh,
+                                                                                     weights_sum.data_ptr<scalar_t>(),
+                                                                                     depth.data_ptr<scalar_t>(),
+                                                                                     image.data_ptr<scalar_t>(),
+                                                                                     image_style.data_ptr<scalar_t>(),
+                                                                                     image_back.data_ptr<scalar_t>(),
+                                                                                     is_localization);
+
+        
     }));
 }
 
@@ -605,15 +681,25 @@ template <typename scalar_t>
 __global__ void kernel_composite_rays_train_backward(
     const scalar_t * __restrict__ grad_weights_sum,
     const scalar_t * __restrict__ grad_image,
+    const scalar_t * __restrict__ grad_image_style,
+    const scalar_t * __restrict__ grad_image_back,
     const scalar_t * __restrict__ sigmas,
     const scalar_t * __restrict__ rgbs,
+    const scalar_t * __restrict__ loc_prob,
+    const scalar_t * __restrict__ style_rgbs,
+    const scalar_t * __restrict__ beck_rgbs,
     const scalar_t * __restrict__ deltas,
     const int * __restrict__ rays,
     const scalar_t * __restrict__ weights_sum,
     const scalar_t * __restrict__ image,
+    const scalar_t * __restrict__ image_style,
+    const scalar_t * __restrict__ image_back,
     const uint32_t M, const uint32_t N, const float T_thresh,
     scalar_t * grad_sigmas,
-    scalar_t * grad_rgbs
+    scalar_t * grad_rgbs,
+    scalar_t * grad_loc_prob,
+    scalar_t * grad_rgbs_style,
+    scalar_t * grad_rgbs_back
 ) {
     // parallel per ray
     const uint32_t n = threadIdx.x + blockIdx.x * blockDim.x;
@@ -627,21 +713,35 @@ __global__ void kernel_composite_rays_train_backward(
     if (num_steps == 0 || offset + num_steps > M) return;
 
     grad_weights_sum += index;
-    grad_image += index * (3+1);
+    grad_image += index * (3+1); // TODO - check if the if train.localization is needed
+    grad_image_style += index * (3+1);
+    grad_image_back += index * (3+1);
     weights_sum += index;
     image += index * (3+1);
+    image_style += index * (3+1);
+    image_back += index * (3+1);
     sigmas += offset;
     rgbs += offset * (3+1);
+    loc_prob += offset;
+    style_rgbs += offset * (3+1);
+    beck_rgbs += offset * (3+1);
     deltas += offset * 2;
     grad_sigmas += offset;
     grad_rgbs += offset * (3+1);
+    grad_loc_prob += offset;
+    grad_rgbs_style += offset * (3+1);
+    grad_rgbs_back += offset * (3+1);
 
     // accumulate
     uint32_t step = 0;
 
     scalar_t T = 1.0f;
     const scalar_t r_final = image[0], g_final = image[1], b_final = image[2], newvar_final = image[3], ws_final = weights_sum[0];
+    const scalar_t r_final_style = image_style[0], g_final_style = image_style[1], b_final_style = image_style[2], newvar_final_style = image_style[3];
+    const scalar_t r_final_back = image_back[0], g_final_back = image_back[1], b_final_back = image_back[2], newvar_final_back = image_back[3];
     scalar_t r = 0, g = 0, b = 0, newvar=0, ws = 0;
+    scalar_t r_yellow = 255, g_yellow = 255, b_yellow = 0;
+
 
     while (step < num_steps) {
 
@@ -663,6 +763,17 @@ __global__ void kernel_composite_rays_train_backward(
         grad_rgbs[2] = grad_image[2] * weight;
         grad_rgbs[3] = grad_image[3] * weight;
 
+
+        grad_rgbs_style[0] = grad_image_style[0] * weight;
+        grad_rgbs_style[1] = grad_image_style[1] * weight;
+        grad_rgbs_style[2] = grad_image_style[2] * weight;
+        grad_rgbs_style[3] = grad_image_style[3] * weight;
+
+        grad_rgbs_back[0] = grad_image_back[0] * weight;
+        grad_rgbs_back[1] = grad_image_back[1] * weight;
+        grad_rgbs_back[2] = grad_image_back[2] * weight;
+        grad_rgbs_back[3] = grad_image_back[3] * weight;
+
         // write grad_sigmas
         grad_sigmas[0] = deltas[0] * (
             grad_image[0] * (T * rgbs[0] - (r_final - r)) +
@@ -672,6 +783,19 @@ __global__ void kernel_composite_rays_train_backward(
             grad_weights_sum[0] * (1 - ws_final)
         );
 
+        grad_loc_prob[0] = grad_image[0] * weight * (r_yellow - rgbs[0]) +
+                           grad_image[1] * weight * (g_yellow - rgbs[1]) +
+                           grad_image[2] * weight * (b_yellow - rgbs[2]) +
+                        //    grad_image[3] * (T * rgbs[3] - (newvar_final - newvar)) TODO - add newvar gradient
+                           grad_image_style[0] * weight * (style_rgbs[0] - rgbs[0]) +
+                            grad_image_style[1] * weight * (style_rgbs[1] - rgbs[1]) +
+                            grad_image_style[2] * weight * (style_rgbs[2] - rgbs[2]) +
+                            // grad_image_style[3] * weight * (style_rgbs[3] - rgbs[3]) + TODO - add newvar gradient
+                            grad_image_back[0] * weight * (rgbs[0] - beck_rgbs[0]) +
+                            grad_image_back[1] * weight * (rgbs[1] - beck_rgbs[1]) +
+                            grad_image_back[2] * weight * (rgbs[2] - beck_rgbs[2]);
+                            // grad_image_back[3] * weight * (rgbs[3] - beck_rgbs[3]); TODO - add newvar gradient
+
         //printf("[n=%d] num_steps=%d, T=%f, grad_sigmas=%f, r_final=%f, r=%f\n", n, step, T, grad_sigmas[0], r_final, r);
         // minimal remained transmittence
         if (T < T_thresh) break;
@@ -679,22 +803,59 @@ __global__ void kernel_composite_rays_train_backward(
         // locate
         sigmas++;
         rgbs += (3+1);
+        style_rgbs += (3+1);
+        beck_rgbs += (3+1);
         deltas += 2;
         grad_sigmas++;
+        grad_loc_prob++;
         grad_rgbs += (3+1);
+        grad_rgbs_style += (3+1);
+        grad_rgbs_back += (3+1);
 
         step++;
     }
 }
 
+        // _backend.composite_rays_train_backward(grad_weights_sum, grad_image, grad_image_style, grad_image_back,
+        //                                        sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs,
+        //                                        deltas, rays, weights_sum, image, image_style, image_back , M, N, T_thresh,
+        //                                        grad_sigmas, grad_rgbs, grad_loc_prob, grad_rgbs_style, grad_rgbs_back)
 
-void composite_rays_train_backward(const at::Tensor grad_weights_sum, const at::Tensor grad_image, const at::Tensor sigmas, const at::Tensor rgbs, const at::Tensor deltas, const at::Tensor rays, const at::Tensor weights_sum, const at::Tensor image, const uint32_t M, const uint32_t N, const float T_thresh, at::Tensor grad_sigmas, at::Tensor grad_rgbs) {
+void composite_rays_train_backward(const at::Tensor grad_weights_sum, const at::Tensor grad_image,
+                                const at::Tensor grad_image_style, const at::Tensor grad_image_back,
+                                const at::Tensor sigmas, const at::Tensor rgbs, 
+                                const at::Tensor loc_prob, const at::Tensor style_rgbs, const at::Tensor beck_rgbs, 
+                                const at::Tensor deltas, const at::Tensor rays, const at::Tensor weights_sum, 
+                                const at::Tensor image, const at::Tensor image_style, const at::Tensor image_back,
+                                const uint32_t M, const uint32_t N, const float T_thresh, at::Tensor grad_sigmas,
+                                at::Tensor grad_rgbs, at::Tensor grad_loc_prob, at::Tensor grad_rgbs_style, at::Tensor grad_rgbs_back
+                                ) {
 
     static constexpr uint32_t N_THREAD = 128;
 
     AT_DISPATCH_FLOATING_TYPES_AND_HALF(
     grad_image.scalar_type(), "composite_rays_train_backward", ([&] {
-        kernel_composite_rays_train_backward<<<div_round_up(N, N_THREAD), N_THREAD>>>(grad_weights_sum.data_ptr<scalar_t>(), grad_image.data_ptr<scalar_t>(), sigmas.data_ptr<scalar_t>(), rgbs.data_ptr<scalar_t>(), deltas.data_ptr<scalar_t>(), rays.data_ptr<int>(), weights_sum.data_ptr<scalar_t>(), image.data_ptr<scalar_t>(), M, N, T_thresh, grad_sigmas.data_ptr<scalar_t>(), grad_rgbs.data_ptr<scalar_t>());
+        kernel_composite_rays_train_backward<<<div_round_up(N, N_THREAD), N_THREAD>>>(grad_weights_sum.data_ptr<scalar_t>(),
+                                                                                    grad_image.data_ptr<scalar_t>(),
+                                                                                    grad_image_style.data_ptr<scalar_t>(),
+                                                                                    grad_image_back.data_ptr<scalar_t>(),
+                                                                                    sigmas.data_ptr<scalar_t>(), 
+                                                                                    rgbs.data_ptr<scalar_t>(),
+                                                                                    loc_prob.data_ptr<scalar_t>(),
+                                                                                    style_rgbs.data_ptr<scalar_t>(),
+                                                                                    beck_rgbs.data_ptr<scalar_t>(),
+                                                                                    deltas.data_ptr<scalar_t>(), 
+                                                                                    rays.data_ptr<int>(), 
+                                                                                    weights_sum.data_ptr<scalar_t>(),
+                                                                                    image.data_ptr<scalar_t>(),
+                                                                                    image_style.data_ptr<scalar_t>(),
+                                                                                    image_back.data_ptr<scalar_t>(),
+                                                                                    M, N, T_thresh, 
+                                                                                    grad_sigmas.data_ptr<scalar_t>(), 
+                                                                                    grad_rgbs.data_ptr<scalar_t>(),    
+                                                                                    grad_loc_prob.data_ptr<scalar_t>(),
+                                                                                    grad_rgbs_style.data_ptr<scalar_t>(),
+                                                                                    grad_rgbs_back.data_ptr<scalar_t>());
     }));
 }
 

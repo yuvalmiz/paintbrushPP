@@ -39,6 +39,16 @@ class NeRFNetwork(NeRFRenderer):
 
         else:
             self.bg_net = None
+        
+        if cfg.train_localization:
+            self.train_localization = True
+            self.localization_net = MLP(self.in_dim, 1, hidden_dim, num_layers, bias=True) # TODO change output to sigmoid
+            stylization_beckground_output_dim = 4 + additional_dim_size - 1
+            self.stylization_net = MLP(self.in_dim, stylization_beckground_output_dim, hidden_dim , num_layers, bias=True) # TODO change output to sigmoid
+            self.background_net = MLP(self.in_dim, stylization_beckground_output_dim, hidden_dim, num_layers, bias=True) # TODO change output to sigmoid
+        else:
+            self.train_localization = False
+
 
         if cfg.nerf_type == NeRFType.latent_tune:
             self.decoder_layer = nn.Linear(4, 3, bias=False)
@@ -60,18 +70,35 @@ class NeRFNetwork(NeRFRenderer):
 
         # sigma
         h = self.encoder(x, bound=self.bound)
+        h_origin = self.sigma_net(h)
+        loc_prob, style_rgbs, back_rgbs = None, None, None
+        
+        if self.train_localization:
+            h_localization = self.localization_net(h)
+            h_stylization = self.stylization_net(h)
+            h_background = self.background_net(h)
+            loc_prob = trunc_exp(h_localization)
+            style_rgbs = h_stylization
+            back_rgbs = h_background
+            if self.decoder_layer is not None:
+                style_rgbs = self.decoder_layer(style_rgbs)
+                style_rgbs = (style_rgbs + 1) / 2
+                back_rgbs = self.decoder_layer(back_rgbs)
+                back_rgbs = (back_rgbs + 1) / 2
+            elif not self.latent_mode:
+                style_rgbs = torch.sigmoid(h_stylization)
+                back_rgbs = torch.sigmoid(h_background)
+            
+        sigma = trunc_exp(h_origin[..., 0] + self.gaussian(x))
+        albedo = h_origin[..., 1:]
 
-        h = self.sigma_net(h)
-
-        sigma = trunc_exp(h[..., 0] + self.gaussian(x))
-        albedo = h[..., 1:]
         if self.decoder_layer is not None:
             albedo = self.decoder_layer(albedo)
             albedo = (albedo + 1) / 2
         elif not self.latent_mode:
-            albedo = torch.sigmoid(h[..., 1:])
+            albedo = torch.sigmoid(h_origin[..., 1:])
 
-        return sigma, albedo
+        return sigma, albedo , loc_prob, style_rgbs, back_rgbs
 
     # ref: https://github.com/zhaofuq/Instant-NSR/blob/main/nerf/network_sdf.py#L192
     def finite_difference_normal(self, x, epsilon=1e-2):
@@ -171,5 +198,11 @@ class NeRFNetwork(NeRFRenderer):
         if self.bg_radius > 0:
             params.append({'params': self.encoder_bg.parameters(), 'lr': lr * 10})
             params.append({'params': self.bg_net.parameters(), 'lr': lr})
+
+        if self.train_localization:
+            params = []
+            params.append({'params': self.localization_net.parameters(), 'lr': lr})
+            params.append({'params': self.stylization_net.parameters(), 'lr': lr})
+            params.append({'params': self.background_net.parameters(), 'lr': lr})
 
         return params

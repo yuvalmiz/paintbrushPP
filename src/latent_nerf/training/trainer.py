@@ -73,7 +73,7 @@ class Trainer:
             p.requires_grad = False
         return diffusion_model
 
-    def calc_text_embeddings(self) -> Union[torch.Tensor, List[torch.Tensor]]:
+    def calc_text_embeddings(self) -> Union[torch.Tensor, List[torch.Tensor]]: # TODO - edit text embeddings
         ref_text = self.cfg.guide.text
         if not self.cfg.guide.append_direction:
             text_z = self.diffusion.get_text_embeds([ref_text])
@@ -139,7 +139,7 @@ class Trainer:
                 self.optimizer.zero_grad()
 
                 with torch.cuda.amp.autocast(enabled=self.cfg.optim.fp16):
-                    pred_rgbs, pred_ws, loss = self.train_render(data)
+                    pred_rgbs, pred_rgbs_style, pred_rgbs_back, pred_ws, loss = self.train_render(data)
 
                 self.scaler.scale(loss).backward()
                 self.scaler.step(self.optimizer)
@@ -219,9 +219,13 @@ class Trainer:
         outputs = self.nerf.render(rays_o, rays_d, staged=False, perturb=True, bg_color=bg_color,
                                    ambient_ratio=ambient_ratio, shading=shading, force_all_rays=True)
         pred_rgb = outputs['image'].reshape(B, H, W, -1).permute(0, 3, 1, 2).contiguous()
+        if self.cfg.render.train_localization:
+            pred_rgb_style = outputs['style_image'].reshape(B, H, W, -1).permute(0, 3, 1, 2).contiguous()
+            pred_rgb_back = outputs['back_image'].reshape(B, H, W, -1).permute(0, 3, 1, 2).contiguous()
         pred_ws = outputs['weights_sum'].reshape(B, 1, H, W)
 
         # text embeddings
+        # TODO - edit text embeddings
         if self.cfg.guide.append_direction:
             dirs = data['dir']  # [B,]
             text_z = self.text_z[dirs]
@@ -230,7 +234,11 @@ class Trainer:
 
         # Guidance loss
         loss_guidance = self.diffusion.train_step(text_z, pred_rgb)
+        if self.cfg.render.train_localization:
+            loss_guidance += self.diffusion.train_step(text_z, pred_rgb_style)
+            loss_guidance += self.diffusion.train_step(text_z, pred_rgb_back)
         loss = loss_guidance
+        
 
         # Sparsity loss
         if 'sparsity_loss' in self.losses:
@@ -240,7 +248,7 @@ class Trainer:
         if 'shape_loss' in self.losses:
             loss += self.cfg.optim.lambda_shape * self.losses['shape_loss'](outputs['xyzs'], outputs['sigmas'])
 
-        return pred_rgb, pred_ws, loss
+        return pred_rgb, pred_rgb_style, pred_rgb_back, pred_ws, loss
 
     def eval_render(self, data, bg_color=None, perturb=False):
         rays_o = data['rays_o']  # [B, N, 3]

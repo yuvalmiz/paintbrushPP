@@ -240,9 +240,10 @@ class NeRFRenderer(nn.Module):
 
             xyzs, dirs, deltas, rays = self.raymarching.march_rays_train(rays_o, rays_d, self.bound, self.density_bitfield, self.cascade, self.grid_size, nears, fars, counter, self.mean_count, perturb, 128, force_all_rays, dt_gamma, max_steps)
             
-            sigmas, rgbs, normals = self(xyzs, dirs, light_d, ratio=ambient_ratio, shading=shading)
-
-            weights_sum, depth, image = self.raymarching.composite_rays_train(sigmas, rgbs, deltas, rays, T_thresh)
+            sigmas, rgbs, normals, loc_prob, style_rgbs, beck_rgbs = self(xyzs, dirs, light_d, ratio=ambient_ratio, shading=shading)
+            
+            #TODO - edit this line
+            weights_sum, depth, image, image_style, image_back = self.raymarching.composite_rays_train(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, T_thresh)
 
             # orientation loss
             if normals is not None:
@@ -251,6 +252,7 @@ class NeRFRenderer(nn.Module):
                 results['loss_orient'] = loss_orient.mean()
 
         else:
+            # TODO - edit eval step
            
             # allocate outputs 
             dtype = torch.float32
@@ -258,6 +260,7 @@ class NeRFRenderer(nn.Module):
             weights_sum = torch.zeros(N, dtype=dtype, device=device)
             depth = torch.zeros(N, dtype=dtype, device=device)
             image = torch.zeros(N, self.img_dims, dtype=dtype, device=device)
+
 
             n_alive = N
             rays_alive = torch.arange(n_alive, dtype=torch.int32, device=device) # [N]
@@ -273,6 +276,7 @@ class NeRFRenderer(nn.Module):
                 # exit loop
                 if n_alive <= 0:
                     break
+
 
                 # decide compact_steps
                 n_step = max(min(N // n_alive, 8), 1)
@@ -297,7 +301,12 @@ class NeRFRenderer(nn.Module):
             bg_color = 1
 
         image = image + (1 - weights_sum).unsqueeze(-1) * bg_color
+        image_style = image_style + (1 - weights_sum).unsqueeze(-1) * bg_color
+        image_back = image_back + (1 - weights_sum).unsqueeze(-1) * bg_color
+
         image = image.view(*prefix, self.img_dims)
+        image_back = image_back.view(*prefix, self.img_dims)
+        image_style = image_style.view(*prefix, self.img_dims)
 
         depth = torch.clamp(depth - nears, min=0) / (fars - nears)
         depth = depth.view(*prefix)
@@ -307,6 +316,8 @@ class NeRFRenderer(nn.Module):
         mask = (nears < fars).reshape(*prefix)
 
         results['image'] = image
+        results['image_style'] = image_style
+        results['image_back'] = image_back
         results['depth'] = depth
         results['weights_sum'] = weights_sum
         results['mask'] = mask

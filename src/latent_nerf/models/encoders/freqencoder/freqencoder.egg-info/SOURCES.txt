@@ -1,6 +1,6 @@
 setup.py
-/net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/freqencoder/src/bindings.cpp
-/net/projects/ranalab/yuvalm_amitd/latent-nerf_changed/src/latent_nerf/models/encoders/freqencoder/src/freqencoder.cu
+/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/freqencoder/src/bindings.cpp
+/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/models/encoders/freqencoder/src/freqencoder.cu
 freqencoder.egg-info/PKG-INFO
 freqencoder.egg-info/SOURCES.txt
 freqencoder.egg-info/dependency_links.txt

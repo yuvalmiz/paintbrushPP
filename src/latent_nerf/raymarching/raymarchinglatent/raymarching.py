@@ -238,7 +238,7 @@ march_rays_train = _march_rays_train.apply
 class _composite_rays_train(Function):
     @staticmethod
     @custom_fwd(cast_inputs=torch.float32)
-    def forward(ctx, sigmas, rgbs, deltas, rays, T_thresh=1e-4):
+    def forward(ctx, sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, T_thresh=1e-4):
         ''' composite rays' rgbs, according to the ray marching formula.
         Args:
             rgbs: float, [M, 3]
@@ -253,6 +253,12 @@ class _composite_rays_train(Function):
         
         sigmas = sigmas.contiguous()
         rgbs = rgbs.contiguous()
+        is_localization = 0
+        if loc_prob is not None:
+            is_localization = 1
+            loc_prob = loc_prob.contiguous()
+            style_rgbs = style_rgbs.contiguous()
+            beck_rgbs = beck_rgbs.contiguous()
 
         M = sigmas.shape[0]
         N = rays.shape[0]
@@ -260,32 +266,46 @@ class _composite_rays_train(Function):
         weights_sum = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
         depth = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
         image = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+        image_style = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+        image_back = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
 
-        _backend.composite_rays_train_forward(sigmas, rgbs, deltas, rays, M, N, T_thresh, weights_sum, depth, image)
+        _backend.composite_rays_train_forward(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs,
+                                              deltas, rays, M, N, T_thresh ,
+                                              weights_sum, depth, image,
+                                              image_style, image_back,
+                                              is_localization)
 
-        ctx.save_for_backward(sigmas, rgbs, deltas, rays, weights_sum, depth, image)
+        ctx.save_for_backward(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum,
+                              depth, image, image_style, image_back)
         ctx.dims = [M, N, T_thresh]
 
-        return weights_sum, depth, image
+        return weights_sum, depth, image, image_style, image_back
     
     @staticmethod
     @custom_bwd
-    def backward(ctx, grad_weights_sum, grad_depth, grad_image):
+    def backward(ctx, grad_weights_sum, grad_depth, grad_image, grad_image_style, grad_image_back):
 
         # NOTE: grad_depth is not used now! It won't be propagated to sigmas.
 
         grad_weights_sum = grad_weights_sum.contiguous()
         grad_image = grad_image.contiguous()
+        grad_image_style = grad_image_style.contiguous()
+        grad_image_back = grad_image_back.contiguous()
 
-        sigmas, rgbs, deltas, rays, weights_sum, depth, image = ctx.saved_tensors
+        sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum, depth, image, image_style, image_back = ctx.saved_tensors
         M, N, T_thresh = ctx.dims
-   
+
         grad_sigmas = torch.zeros_like(sigmas)
         grad_rgbs = torch.zeros_like(rgbs)
+        grad_loc_prob = torch.zeros_like(loc_prob)
+        grad_rgbs_style = torch.zeros_like(style_rgbs)
+        grad_rgbs_back = torch.zeros_like(beck_rgbs)
 
-        _backend.composite_rays_train_backward(grad_weights_sum, grad_image, sigmas, rgbs, deltas, rays, weights_sum, image, M, N, T_thresh, grad_sigmas, grad_rgbs)
+        _backend.composite_rays_train_backward(grad_weights_sum, grad_image, grad_image_style, grad_image_back,
+                                               sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum, image, image_style, image_back , M, N, T_thresh,
+                                               grad_sigmas, grad_rgbs, grad_loc_prob, grad_rgbs_style, grad_rgbs_back)
 
-        return grad_sigmas, grad_rgbs, None, None, None
+        return grad_sigmas, grad_rgbs, grad_loc_prob, grad_rgbs_style, grad_rgbs_back, None, None, None
 
 
 composite_rays_train = _composite_rays_train.apply

@@ -51,5 +51,7 @@ class RenderConfig:
     backbone: str = 'grid'
     # Define the nerf output type
     nerf_type: NeRFType = NeRFType['latent']
+    # Train localization
+    train_localization: bool = False
 
 

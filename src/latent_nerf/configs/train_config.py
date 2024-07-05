@@ -24,6 +24,8 @@ class GuideConfig:
     mesh_scale: float = 0.7
     # Define the proximal distance allowed
     proximal_surface: float = 0.3
+    # Train localization
+    train_localization: bool = False
 
 
 @dataclass
