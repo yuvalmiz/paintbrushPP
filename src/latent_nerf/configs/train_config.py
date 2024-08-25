@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Tuple
 
 from loguru import logger
 
@@ -24,8 +24,19 @@ class GuideConfig:
     mesh_scale: float = 0.7
     # Define the proximal distance allowed
     proximal_surface: float = 0.3
-    # Train localization
-    train_localization: bool = False
+    prefix: str = ""
+
+    localization_prompt: str = ""
+
+    object_name: str = ""
+
+    edit: str = ""
+
+    style_prompt: str = ""
+
+    style: str = ""
+
+    background_prompt: str = ""
 
 
 @dataclass
@@ -38,9 +49,10 @@ class OptimConfig:
     # Seed for experiment
     seed: int = 0
     # Total iters
-    iters: int = 5000
+    iters: int = 5000 #TODO CAN BE CHANGED
     # Learning rate
     lr: float = 1e-3
+    lr_csd: float = 1.e-4
     # use amp mixed precision training
     fp16: bool = True
     # Start shading at this iteration
@@ -74,6 +86,27 @@ class LogConfig:
     @property
     def exp_dir(self) -> Path:
         return self.exp_root / self.exp_name
+@dataclass
+class GuidanceConfigLocalization:
+    """ Parameters for the score distillation guidance """
+    object_name: str = "hand"
+    style: str = "fancy gold"
+    edit: str = "watch"
+    prefix: str = ""
+    localization_prompt: Optional[str] = None # "a 3d render of a gray hand with a yellow watch"
+    negative_prompt: Optional[str] = None
+    style_prompt: Optional[str] = None # "a 3d render of a gray hand with a fancy gold watch"
+    background_prompt: Optional[str] = None # "a 3d render of a hand with a yellow watch"
+    append_direction: bool = False
+    cascaded: bool = True
+    stage_I_weight: float = 1.0
+    stage_II_weight: float = 0.1
+    stage_II_weight_range: Tuple[float] = (0, 0.8)
+    no_lerp_stage_II: bool = False
+    anneal_t: bool = False
+    batched_sd: bool = False
+    third_loss: bool = True
+    global_stylization: bool = False
 
 
 @dataclass
@@ -83,6 +116,7 @@ class TrainConfig:
     render: RenderConfig = field(default_factory=RenderConfig)
     optim: OptimConfig = field(default_factory=OptimConfig)
     guide: GuideConfig = field(default_factory=GuideConfig)
+    guide_localization: GuidanceConfigLocalization = field(default_factory=GuidanceConfigLocalization)
 
     def __post_init__(self):
         if self.log.eval_only and (self.optim.ckpt is None and not self.optim.resume):

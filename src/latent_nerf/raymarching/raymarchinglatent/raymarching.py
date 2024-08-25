@@ -235,7 +235,7 @@ class _march_rays_train(Function):
 march_rays_train = _march_rays_train.apply
 
 
-class _composite_rays_train(Function):
+class _composite_rays_train_localization(Function):
     @staticmethod
     @custom_fwd(cast_inputs=torch.float32)
     def forward(ctx, sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, T_thresh=1e-4):
@@ -253,27 +253,21 @@ class _composite_rays_train(Function):
         
         sigmas = sigmas.contiguous()
         rgbs = rgbs.contiguous()
-        is_localization = 0
-        if loc_prob is not None:
-            is_localization = 1
-            loc_prob = loc_prob.contiguous()
-            style_rgbs = style_rgbs.contiguous()
-            beck_rgbs = beck_rgbs.contiguous()
-
         M = sigmas.shape[0]
         N = rays.shape[0]
-
+        loc_prob = loc_prob.contiguous()
+        style_rgbs = style_rgbs.contiguous()
+        beck_rgbs = beck_rgbs.contiguous()
         weights_sum = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
         depth = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
         image = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
         image_style = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
         image_back = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
 
-        _backend.composite_rays_train_forward(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs,
+        _backend.composite_rays_train_localization_forward(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs,
                                               deltas, rays, M, N, T_thresh ,
                                               weights_sum, depth, image,
-                                              image_style, image_back,
-                                              is_localization)
+                                              image_style, image_back)
 
         ctx.save_for_backward(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum,
                               depth, image, image_style, image_back)
@@ -295,18 +289,156 @@ class _composite_rays_train(Function):
         sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum, depth, image, image_style, image_back = ctx.saved_tensors
         M, N, T_thresh = ctx.dims
 
-        grad_sigmas = torch.zeros_like(sigmas)
-        grad_rgbs = torch.zeros_like(rgbs)
         grad_loc_prob = torch.zeros_like(loc_prob)
         grad_rgbs_style = torch.zeros_like(style_rgbs)
         grad_rgbs_back = torch.zeros_like(beck_rgbs)
 
-        _backend.composite_rays_train_backward(grad_weights_sum, grad_image, grad_image_style, grad_image_back,
+        _backend.composite_rays_train_localization_backward(grad_weights_sum, grad_image, grad_image_style, grad_image_back,
                                                sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum, image, image_style, image_back , M, N, T_thresh,
-                                               grad_sigmas, grad_rgbs, grad_loc_prob, grad_rgbs_style, grad_rgbs_back)
+                                               grad_loc_prob, grad_rgbs_style, grad_rgbs_back)
 
-        return grad_sigmas, grad_rgbs, grad_loc_prob, grad_rgbs_style, grad_rgbs_back, None, None, None
+        return None, None, grad_loc_prob, grad_rgbs_style, grad_rgbs_back, None, None, None
 
+
+composite_rays_train_localization = _composite_rays_train_localization.apply
+
+
+class _composite_rays_train_localization_int(Function):
+    @staticmethod
+    @custom_fwd(cast_inputs=torch.float32)
+    def forward(ctx, sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, T_thresh=1e-4):
+        ''' composite rays' rgbs, according to the ray marching formula.
+        Args:
+            rgbs: float, [M, 3]
+            sigmas: float, [M,]
+            deltas: float, [M, 2]
+            rays: int32, [N, 3]
+        Returns:
+            weights_sum: float, [N,], the alpha channel
+            depth: float, [N, ], the Depth
+            image: float, [N, 3], the RGB channel (after multiplying alpha!)
+        '''
+        
+        sigmas = sigmas.contiguous()
+        rgbs = rgbs.contiguous()
+        M = sigmas.shape[0]
+        N = rays.shape[0]
+        loc_prob = loc_prob.contiguous()
+        style_rgbs = style_rgbs.contiguous()
+        beck_rgbs = beck_rgbs.contiguous()
+        weights_sum = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
+        depth = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
+        image_origin = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+        image_prob = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
+        image_style_origin = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+        image_back_origin = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+        image_localization_mix = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+        image_style_mix = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+        image_back_mix = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+
+        _backend.composite_rays_train_localization_int_forward(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs,
+                                              deltas, rays, M, N, T_thresh ,
+                                              weights_sum, depth, image_origin,
+                                              image_prob, image_style_origin,
+                                              image_back_origin, image_localization_mix, image_style_mix,
+                                              image_back_mix)
+
+        ctx.save_for_backward(sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum,
+                              depth, image_origin, image_prob, image_style_origin,
+                              image_back_origin, image_localization_mix, image_style_mix, image_back_mix)
+        ctx.dims = [M, N, T_thresh]
+
+        return weights_sum, depth, image_origin, image_prob, image_style_origin, image_back_origin, image_localization_mix, image_style_mix, image_back_mix
+    
+    @staticmethod
+    @custom_bwd
+    def backward(ctx, grad_weights_sum, grad_depth, grad_image_origin, grad_image_prob,
+                 grad_image_style_origin, grad_image_back_origin,
+                 grad_image, grad_image_style, grad_image_back):
+
+        # NOTE: grad_depth is not used now! It won't be propagated to sigmas.
+
+        grad_weights_sum = grad_weights_sum.contiguous()
+        grad_image = grad_image.contiguous()
+        grad_image_style = grad_image_style.contiguous()
+        grad_image_back = grad_image_back.contiguous()
+
+        sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum, depth, image_origin,image_prob, image_style_origin, image_back_origin, image_localization_mix, image_style_mix, image_back_mix = ctx.saved_tensors
+        M, N, T_thresh = ctx.dims
+
+        grad_loc_prob = torch.zeros_like(loc_prob)
+        grad_rgbs_style = torch.zeros_like(style_rgbs)
+        grad_rgbs_back = torch.zeros_like(beck_rgbs)
+
+        _backend.composite_rays_train_localization_int_backward(grad_weights_sum, grad_image, grad_image_style, grad_image_back,
+                                               sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs, deltas, rays, weights_sum,
+                                               image_origin, image_prob, image_style_origin, image_back_origin,
+                                               image_localization_mix, image_style_mix, image_back_mix , M, N, T_thresh,
+                                               grad_loc_prob, grad_rgbs_style, grad_rgbs_back)
+
+        return None, None, grad_loc_prob, grad_rgbs_style, grad_rgbs_back, None, None, None
+
+
+composite_rays_train_localization_int = _composite_rays_train_localization_int.apply
+
+
+
+
+class _composite_rays_train(Function):
+    @staticmethod
+    @custom_fwd(cast_inputs=torch.float32)
+    def forward(ctx, sigmas, rgbs, deltas, rays, T_thresh=1e-4):
+        ''' composite rays' rgbs, according to the ray marching formula.
+        Args:
+            rgbs: float, [M, 3]
+            sigmas: float, [M,]
+            deltas: float, [M, 2]
+            rays: int32, [N, 3]
+        Returns:
+            weights_sum: float, [N,], the alpha channel
+            depth: float, [N, ], the Depth
+            image: float, [N, 3], the RGB channel (after multiplying alpha!)
+        '''
+        
+        sigmas = sigmas.contiguous()
+        rgbs = rgbs.contiguous()
+
+        M = sigmas.shape[0]
+        N = rays.shape[0]
+
+        weights_sum = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
+        depth = torch.empty(N, dtype=sigmas.dtype, device=sigmas.device)
+        image = torch.empty(N, 3 + 1, dtype=sigmas.dtype, device=sigmas.device)
+
+        _backend.composite_rays_train_forward(sigmas, rgbs, deltas, rays, M, N, T_thresh, weights_sum, depth, image)
+
+        num_zeros = torch.count_nonzero(image == 0).item()
+        num_non_zeros = torch.count_nonzero(image).item()
+
+
+        ctx.save_for_backward(sigmas, rgbs, deltas, rays, weights_sum, depth, image)
+        ctx.dims = [M, N, T_thresh]
+
+        return weights_sum, depth, image
+    
+    @staticmethod
+    @custom_bwd
+    def backward(ctx, grad_weights_sum, grad_depth, grad_image):
+
+        # NOTE: grad_depth is not used now! It won't be propagated to sigmas.
+
+
+        grad_image = grad_image.contiguous()
+
+        sigmas, rgbs, deltas, rays, weights_sum, depth, image = ctx.saved_tensors
+        M, N, T_thresh = ctx.dims
+   
+        grad_sigmas = torch.zeros_like(sigmas)
+        grad_rgbs = torch.zeros_like(rgbs)
+
+        _backend.composite_rays_train_backward(grad_weights_sum, grad_image, sigmas, rgbs, deltas, rays, weights_sum, image, M, N, T_thresh, grad_sigmas, grad_rgbs)
+
+        return grad_sigmas, grad_rgbs, None, None, None
 
 composite_rays_train = _composite_rays_train.apply
 
@@ -391,3 +523,63 @@ class _composite_rays(Function):
 
 
 composite_rays = _composite_rays.apply
+
+
+class _composite_rays_localization(Function):
+    @staticmethod
+    @custom_fwd(cast_inputs=torch.float32) # need to cast sigmas & rgbs to float
+    def forward(ctx, n_alive, n_step, rays_alive, rays_t, sigmas, rgbs,loc_prob, style_rgbs,
+                beck_rgbs,deltas, weights_sum, depth, image, image_style,image_back, T_thresh=1e-2):
+        ''' composite rays' rgbs, according to the ray marching formula. (for inference)
+        Args:
+            n_alive: int, number of alive rays
+            n_step: int, how many steps we march
+            rays_alive: int, [n_alive], the alive rays' IDs in N (N >= n_alive)
+            rays_t: float, [N], the alive rays' time
+            sigmas: float, [n_alive * n_step,]
+            rgbs: float, [n_alive * n_step, 3]
+            deltas: float, [n_alive * n_step, 2], all generated points' deltas (here we record two deltas, the first is for RGB, the second for depth).
+        In-place Outputs:
+            weights_sum: float, [N,], the alpha channel
+            depth: float, [N,], the depth value
+            image: float, [N, 3], the RGB channel (after multiplying alpha!)
+        '''
+        _backend.composite_rays_localization(n_alive, n_step, T_thresh, rays_alive, rays_t,
+                                             sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs,
+                                             deltas, weights_sum, depth, image, image_style,image_back)
+        return tuple()
+
+composite_rays_localization = _composite_rays_localization.apply
+
+
+class _composite_rays_localization_int(Function):
+    @staticmethod
+    @custom_fwd(cast_inputs=torch.float32) # need to cast sigmas & rgbs to float
+    def forward(ctx, n_alive, n_step, rays_alive, rays_t, sigmas, rgbs,loc_prob, style_rgbs,
+                beck_rgbs,deltas, weights_sum, depth, image_origin,
+                image_prob, image_style_origin, image_back_origin,
+                image_localization_mix, image_style_mix, image_back_mix,
+                T_thresh=1e-2):
+        ''' composite rays' rgbs, according to the ray marching formula. (for inference)
+        Args:
+            n_alive: int, number of alive rays
+            n_step: int, how many steps we march
+            rays_alive: int, [n_alive], the alive rays' IDs in N (N >= n_alive)
+            rays_t: float, [N], the alive rays' time
+            sigmas: float, [n_alive * n_step,]
+            rgbs: float, [n_alive * n_step, 3]
+            deltas: float, [n_alive * n_step, 2], all generated points' deltas (here we record two deltas, the first is for RGB, the second for depth).
+        In-place Outputs:
+            weights_sum: float, [N,], the alpha channel
+            depth: float, [N,], the depth value
+            image: float, [N, 3], the RGB channel (after multiplying alpha!)
+        '''
+        _backend.composite_rays_localization_int(n_alive, n_step, T_thresh, rays_alive, rays_t,
+                                             sigmas, rgbs, loc_prob, style_rgbs, beck_rgbs,
+                                             deltas, weights_sum, depth, image_origin,
+                                             image_prob, image_style_origin,
+                                             image_back_origin, image_localization_mix,
+                                             image_style_mix, image_back_mix)
+        return tuple()
+
+composite_rays_localization_int = _composite_rays_localization_int.apply

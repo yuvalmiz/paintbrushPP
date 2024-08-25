@@ -13,7 +13,13 @@ PYBIND11_MODULE(TORCH_EXTENSION_NAME, m) {
     m.def("march_rays_train", &march_rays_train, "march_rays_train (CUDA)");
     m.def("composite_rays_train_forward", &composite_rays_train_forward, "composite_rays_train_forward (CUDA)");
     m.def("composite_rays_train_backward", &composite_rays_train_backward, "composite_rays_train_backward (CUDA)");
+    m.def("composite_rays_train_localization_forward", &composite_rays_train_localization_forward, "composite_rays_train_localization_forward (CUDA)");
+    m.def("composite_rays_train_localization_backward", &composite_rays_train_localization_backward, "composite_rays_train_localization_backward (CUDA)");
+    m.def("composite_rays_train_localization_int_forward", &composite_rays_train_localization_int_forward, "composite_rays_train_localization_int_forward (CUDA)");
+    m.def("composite_rays_train_localization_int_backward", &composite_rays_train_localization_int_backward, "composite_rays_train_localization_int_backward (CUDA)");
     // infer
     m.def("march_rays", &march_rays, "march rays (CUDA)");
     m.def("composite_rays", &composite_rays, "composite rays (CUDA)");
+    m.def("composite_rays_localization", &composite_rays_localization, "composite rays localization (CUDA)");
+    m.def("composite_rays_localization_int", &composite_rays_localization_int, "composite rays int localization (CUDA)");
 }

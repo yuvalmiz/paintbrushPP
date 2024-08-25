@@ -1,3 +1,0 @@
-# ninja log v5
-1	28748	1719577725838892594	/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/raymarching/raymarchinglatent/build/temp.linux-x86_64-cpython-310/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/raymarching/raymarchinglatent/src/bindings.o	f1602d7312c28b13
-3	63326	1719577760395225830	/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/raymarching/raymarchinglatent/build/temp.linux-x86_64-cpython-310/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/raymarching/raymarchinglatent/src/raymarching.o	b2dc6b4143788962

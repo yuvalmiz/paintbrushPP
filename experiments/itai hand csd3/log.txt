@@ -1,0 +1,158 @@
+2024-08-01 12:48:46 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-01 12:48:48 	Done.
+2024-08-01 12:48:48 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-01 12:48:48 	Done!
+2024-08-01 12:48:48 Loading frequency encoding (compiling might take a while)...
+2024-08-01 12:48:48 	Done!
+2024-08-01 12:48:49 Loaded grid NeRF, #parameters: 12268286
+2024-08-01 12:48:49 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-01 12:48:49 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-01 12:48:49 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-01 12:48:51 	 successfully loaded stable diffusion!
+2024-08-01 12:48:56 Loaded DeepFloyd IF
+2024-08-01 12:49:00 Loaded DeepFloyd IF
+2024-08-01 12:49:00 Localization prompt: a 3d render of a gray hand wearing yellow watch on its wrist
+2024-08-01 12:49:00 Style prompt: a 3d render of a gray hand wearing fancy gold watch on its wrist
+2024-08-01 12:49:00 Background prompt: a 3d render of a hand wearing yellow watch on its wrist
+2024-08-01 12:49:01 loaded localization model.
+2024-08-01 12:49:01 Successfully initialized itai hand csd3
+2024-08-01 12:49:01 Starting training ^_^
+2024-08-01 12:50:37 Evaluating and saving model, iteration #100...
+2024-08-01 12:50:40 Done!
+2024-08-01 12:52:16 Evaluating and saving model, iteration #200...
+2024-08-01 12:52:19 Done!
+2024-08-01 12:53:55 Evaluating and saving model, iteration #300...
+2024-08-01 12:53:58 Done!
+2024-08-01 12:55:34 Evaluating and saving model, iteration #400...
+2024-08-01 12:55:37 Done!
+2024-08-01 12:57:13 Evaluating and saving model, iteration #500...
+2024-08-01 12:57:15 Done!
+2024-08-01 12:58:52 Evaluating and saving model, iteration #600...
+2024-08-01 12:58:54 Done!
+2024-08-01 13:00:31 Evaluating and saving model, iteration #700...
+2024-08-01 13:00:33 Done!
+2024-08-01 13:02:10 Evaluating and saving model, iteration #800...
+2024-08-01 13:02:12 Done!
+2024-08-01 13:03:49 Evaluating and saving model, iteration #900...
+2024-08-01 13:03:51 Done!
+2024-08-01 13:05:28 Evaluating and saving model, iteration #1000...
+2024-08-01 13:05:30 Done!
+2024-08-01 13:07:07 Evaluating and saving model, iteration #1100...
+2024-08-01 13:07:09 Done!
+2024-08-01 13:08:46 Evaluating and saving model, iteration #1200...
+2024-08-01 13:08:48 Done!
+2024-08-01 13:10:25 Evaluating and saving model, iteration #1300...
+2024-08-01 13:10:27 Done!
+2024-08-01 13:12:04 Evaluating and saving model, iteration #1400...
+2024-08-01 13:12:06 Done!
+2024-08-01 13:13:25 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-01 13:13:28 	Done.
+2024-08-01 13:13:28 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-01 13:13:28 	Done!
+2024-08-01 13:13:28 Loading frequency encoding (compiling might take a while)...
+2024-08-01 13:13:28 	Done!
+2024-08-01 13:13:28 Loaded grid NeRF, #parameters: 12268286
+2024-08-01 13:13:28 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-01 13:13:28 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-01 13:13:28 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-01 13:13:30 	 successfully loaded stable diffusion!
+2024-08-01 13:13:35 Loaded DeepFloyd IF
+2024-08-01 13:13:38 Loaded DeepFloyd IF
+2024-08-01 13:13:38 Localization prompt: a 3d render of a gray hand wearing yellow watch on its wrist
+2024-08-01 13:13:38 Style prompt: a 3d render of a gray hand wearing fancy gold watch on its wrist
+2024-08-01 13:13:38 Background prompt: a 3d render of a hand wearing yellow watch on its wrist
+2024-08-01 13:13:39 loaded localization model.
+2024-08-01 13:13:39 Successfully initialized itai hand csd3
+2024-08-01 13:13:39 Starting training ^_^
+2024-08-01 13:16:08 Evaluating and saving model, iteration #100...
+2024-08-01 13:16:10 Done!
+2024-08-01 13:18:39 Evaluating and saving model, iteration #200...
+2024-08-01 13:18:41 Done!
+2024-08-01 13:21:10 Evaluating and saving model, iteration #300...
+2024-08-01 13:21:13 Done!
+2024-08-01 13:23:41 Evaluating and saving model, iteration #400...
+2024-08-01 13:23:44 Done!
+2024-08-01 13:26:12 Evaluating and saving model, iteration #500...
+2024-08-01 13:26:15 Done!
+2024-08-01 13:28:43 Evaluating and saving model, iteration #600...
+2024-08-01 13:28:46 Done!
+2024-08-01 13:31:14 Evaluating and saving model, iteration #700...
+2024-08-01 13:31:17 Done!
+2024-08-01 13:33:46 Evaluating and saving model, iteration #800...
+2024-08-01 13:33:48 Done!
+2024-08-01 13:36:17 Evaluating and saving model, iteration #900...
+2024-08-01 13:36:19 Done!

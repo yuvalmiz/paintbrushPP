@@ -1,0 +1,86 @@
+guide:
+  append_direction: true
+  background_prompt: ''
+  concept_name: null
+  diffusion_name: CompVis/stable-diffusion-v1-4
+  edit: ''
+  localization_prompt: ''
+  mesh_scale: 0.7
+  object_name: ''
+  prefix: ''
+  proximal_surface: 0.3
+  shape_path: null
+  style: ''
+  style_prompt: ''
+  text: hand
+guide_localization:
+  anneal_t: false
+  append_direction: false
+  background_prompt: null
+  batched_sd: false
+  cascaded: true
+  edit: watch on its wrist
+  global_stylization: false
+  localization_prompt: null
+  negative_prompt: null
+  no_lerp_stage_II: false
+  object_name: hand
+  prefix: ''
+  stage_II_weight: 0.1
+  stage_II_weight_range:
+  - 0
+  - 0.8
+  stage_I_weight: 1.0
+  style: fancy gold
+  style_prompt: null
+  third_loss: true
+log:
+  eval_only: false
+  eval_size: 10
+  exp_name: itai hand csd2
+  exp_root: experiments
+  full_eval_size: 100
+  max_keep_ckpts: 2
+  save_interval: 100
+  skip_rgb: false
+optim:
+  ckpt: null
+  fp16: true
+  iters: 30000
+  lambda_shape: 5.0e-06
+  lambda_sparsity: 0.0005
+  lr: 0.001
+  lr_csd: 0.0001
+  resume: false
+  seed: 0
+  start_shading_iter: null
+render:
+  angle_front: 70
+  angle_overhead: 30
+  backbone: grid
+  bg_radius: 1.4
+  bound: 1
+  csd: true
+  cuda_ray: false
+  density_thresh: 10
+  dt_gamma: 0
+  eval_h: 128
+  eval_w: 128
+  fovy_range:
+  - 40
+  - 70
+  jitter_pose: false
+  max_ray_batch: 4096
+  max_steps: 1024
+  min_near: 0.1
+  nerf_path: /net/projects/ranalab/yuvalm_amitd/paintbrushPP/experiments/Itai hand/checkpoints/step_005000.pth
+  nerf_type: rgb
+  num_steps: 128
+  radius_range:
+  - 1.0
+  - 1.5
+  train_h: 128
+  train_localization: true
+  train_w: 128
+  update_extra_interval: 16
+  upsample_steps: 0

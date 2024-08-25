@@ -1,5 +1,6 @@
 **/.ipynb_checkpoints
-**/__pycache__
+**/__pycache__/
+**/build/
 *.png
 *.mp4
 *.npy
@@ -8,3 +9,7 @@
 data/*
 logs/*
 .idea
+*.png
+*.jpg
+*.pth
+*.pyc

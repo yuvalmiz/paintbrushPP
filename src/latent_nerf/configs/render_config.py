@@ -24,9 +24,9 @@ class RenderConfig:
     # threshold for density grid to be occupied
     density_thresh: float = 10
     # Render width for training
-    train_w: int = 64
+    train_w: int = 64 #TODO CAN BE CHANGED TO 128
     # Render height for training
-    train_h: int = 64
+    train_h: int = 64 #TODO CAN BE CHANGED TO 128
     # Render width for inference
     eval_w: int = 128
     # Render height for inference
@@ -54,4 +54,12 @@ class RenderConfig:
     # Train localization
     train_localization: bool = False
 
+    nerf_path: str = None
+    
+    csd: bool = False
 
+    first_arc: bool = False
+
+    second_arc: bool = False
+
+    third_arc: bool = False

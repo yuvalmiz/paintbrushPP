@@ -1,7 +1,0 @@
-setup.py
-/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/raymarching/raymarchingrgb/src/bindings.cpp
-/net/projects/ranalab/yuvalm_amitd/latent-nerf2/latent-nerf/src/latent_nerf/raymarching/raymarchingrgb/src/raymarching.cu
-raymarchingrgb.egg-info/PKG-INFO
-raymarchingrgb.egg-info/SOURCES.txt
-raymarchingrgb.egg-info/dependency_links.txt
-raymarchingrgb.egg-info/top_level.txt

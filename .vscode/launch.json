@@ -1,0 +1,92 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Module",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "scripts.train_latent_nerf",
+            "python": "/net/projects/ranalab/yuvalm_amitd/conda_env/bin/python",
+            "args": [
+                "--log.exp_name", "lego man localization",
+                "--guide.text", "a lego man",
+                "--guide.style", "purple",
+                "--guide.edit", "shirt",
+                "--render.nerf_type", "rgb",
+                "--render.train_localization", "True",
+                "--render.nerf_path", "/net/projects/ranalab/yuvalm_amitd/paintbrushPP/experiments/lego man rgb/checkpoints/step_005000.pth"
+            ]
+        }
+    ]
+}
+
+
+// {
+//     // Use IntelliSense to learn about possible attributes.
+//     // Hover to view descriptions of existing attributes.
+//     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "name": "Python Debugger: Module",
+//             "type": "debugpy",
+//             "request": "launch",
+//             "module": "scripts.train_latent_nerf",
+//             "python": "/net/projects/ranalab/yuvalm_amitd/conda_env/bin/python",
+//             "args": [
+//                 "--log.exp_name", "lego man rgb",
+//                 "--guide.text", "a lego man",
+//                 "--render.nerf_type", "rgb",
+//             ]
+//         }
+//     ]
+// }
+
+
+
+
+// {
+//     // Use IntelliSense to learn about possible attributes.
+//     // Hover to view descriptions of existing attributes.
+//     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "name": "Python Debugger: latent_nerf",
+//             "type": "debugpy",
+//             "request": "launch",
+//             "module": "scripts.train_latent_nerf",
+//             "console": "integratedTerminal",
+//             "args": [
+//                 "--log.exp_name", "sand_castle",
+//                 "--guide.text", "a highly detailed sand castle",
+//                 "--render.nerf_type", "latent"
+//             ]
+//         }
+//     ]
+// }
+
+// {
+//     // Use IntelliSense to learn about possible attributes.
+//     // Hover to view descriptions of existing attributes.
+//     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "name": "Python Debugger: latent_nerf",
+//             "type": "debugpy",
+//             "request": "launch",
+//             "module": "scripts.train_latent_nerf",
+//             "console": "integratedTerminal",
+//             "args": [
+//                 "--log.exp_name", "hand",
+//                 "--guide.text", "a gray hand",
+//                 "--guide.shape_path", "shapes/hand_prismatic.obj",
+//                 "--render.nerf_type", "latent"
+//             ]
+//         }
+//     ]
+// }

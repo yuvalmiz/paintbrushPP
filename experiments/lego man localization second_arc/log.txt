@@ -1,0 +1,400 @@
+2024-08-03 13:55:54 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-03 13:55:56 	Done.
+2024-08-03 13:55:56 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-03 13:55:56 	Done!
+2024-08-03 13:55:56 Loading frequency encoding (compiling might take a while)...
+2024-08-03 13:55:56 	Done!
+2024-08-03 13:55:56 Loaded grid NeRF, #parameters: 12268286
+2024-08-03 13:55:56 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-03 13:55:56 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-03 13:55:56 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-03 13:55:58 	 successfully loaded stable diffusion!
+2024-08-03 13:56:03 Loaded DeepFloyd IF
+2024-08-03 13:56:06 Loaded DeepFloyd IF
+2024-08-03 13:56:06 Localization prompt: a 3d render of a gray hand wearing yellow watch
+2024-08-03 13:56:06 Style prompt: a 3d render of a gray hand wearing fancy gold watch
+2024-08-03 13:56:06 Background prompt: a 3d render of a hand wearing yellow watch
+2024-08-03 13:56:07 loaded localization model.
+2024-08-03 13:56:07 Successfully initialized lego man localization second_arc
+2024-08-03 13:56:07 Starting training ^_^
+2024-08-03 13:57:44 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-03 13:57:46 	Done.
+2024-08-03 13:57:46 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-03 13:57:46 	Done!
+2024-08-03 13:57:46 Loading frequency encoding (compiling might take a while)...
+2024-08-03 13:57:46 	Done!
+2024-08-03 13:57:47 Loaded grid NeRF, #parameters: 12268286
+2024-08-03 13:57:47 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-03 13:57:47 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-03 13:57:47 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-03 13:57:48 	 successfully loaded stable diffusion!
+2024-08-03 13:57:53 Loaded DeepFloyd IF
+2024-08-03 13:57:56 Loaded DeepFloyd IF
+2024-08-03 13:57:57 Localization prompt: a 3d render of a gray hand wearing yellow watch
+2024-08-03 13:57:57 Style prompt: a 3d render of a gray hand wearing fancy gold watch
+2024-08-03 13:57:57 Background prompt: a 3d render of a hand wearing yellow watch
+2024-08-03 13:57:57 loaded localization model.
+2024-08-03 13:57:57 Successfully initialized lego man localization second_arc
+2024-08-03 13:57:57 Starting training ^_^
+2024-08-03 13:58:44 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-03 13:58:45 	Done.
+2024-08-03 13:58:45 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-03 13:58:45 	Done!
+2024-08-03 13:58:45 Loading frequency encoding (compiling might take a while)...
+2024-08-03 13:58:45 	Done!
+2024-08-03 13:58:45 Loaded grid NeRF, #parameters: 12268286
+2024-08-03 13:58:45 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-03 13:58:45 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-03 13:58:45 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-03 13:58:47 	 successfully loaded stable diffusion!
+2024-08-03 13:58:51 Loaded DeepFloyd IF
+2024-08-03 13:58:55 Loaded DeepFloyd IF
+2024-08-03 13:58:55 Localization prompt: a 3d render of a gray hand wearing yellow watch
+2024-08-03 13:58:55 Style prompt: a 3d render of a gray hand wearing fancy gold watch
+2024-08-03 13:58:55 Background prompt: a 3d render of a hand wearing yellow watch
+2024-08-03 13:58:56 loaded localization model.
+2024-08-03 13:58:56 Successfully initialized lego man localization second_arc
+2024-08-03 13:58:56 Starting training ^_^
+2024-08-03 14:00:33 Evaluating and saving model, iteration #100...
+2024-08-03 14:00:36 Done!
+2024-08-03 14:02:13 Evaluating and saving model, iteration #200...
+2024-08-03 14:02:16 Done!
+2024-08-03 14:03:53 Evaluating and saving model, iteration #300...
+2024-08-03 14:03:55 Done!
+2024-08-03 14:05:33 Evaluating and saving model, iteration #400...
+2024-08-03 14:05:35 Done!
+2024-08-03 14:07:12 Evaluating and saving model, iteration #500...
+2024-08-03 14:07:15 Done!
+2024-08-03 14:08:52 Evaluating and saving model, iteration #600...
+2024-08-03 14:08:55 Done!
+2024-08-03 14:10:32 Evaluating and saving model, iteration #700...
+2024-08-03 14:10:35 Done!
+2024-08-03 14:12:12 Evaluating and saving model, iteration #800...
+2024-08-03 14:12:15 Done!
+2024-08-03 14:13:52 Evaluating and saving model, iteration #900...
+2024-08-03 14:13:54 Done!
+2024-08-03 14:15:41 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-03 14:15:43 	Done.
+2024-08-03 14:15:43 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-03 14:15:44 	Done!
+2024-08-03 14:15:44 Loading frequency encoding (compiling might take a while)...
+2024-08-03 14:15:44 	Done!
+2024-08-03 14:15:44 Loaded grid NeRF, #parameters: 12268286
+2024-08-03 14:15:44 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-03 14:15:44 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-03 14:15:44 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-03 14:15:45 	 successfully loaded stable diffusion!
+2024-08-03 14:15:50 Loaded DeepFloyd IF
+2024-08-03 14:15:53 Loaded DeepFloyd IF
+2024-08-03 14:15:54 Localization prompt: a 3d render of a gray hand wearing yellow watch
+2024-08-03 14:15:54 Style prompt: a 3d render of a gray hand wearing fancy gold watch
+2024-08-03 14:15:54 Background prompt: a 3d render of a hand wearing yellow watch
+2024-08-03 14:15:55 loaded localization model.
+2024-08-03 14:15:55 Successfully initialized lego man localization second_arc
+2024-08-03 14:15:55 Starting training ^_^
+2024-08-03 14:17:32 Evaluating and saving model, iteration #100...
+2024-08-03 14:17:34 Done!
+2024-08-03 14:19:11 Evaluating and saving model, iteration #200...
+2024-08-03 14:19:14 Done!
+2024-08-03 14:20:53 Evaluating and saving model, iteration #300...
+2024-08-03 14:20:56 Done!
+2024-08-03 14:22:33 Evaluating and saving model, iteration #400...
+2024-08-03 14:22:36 Done!
+2024-08-03 14:24:14 Evaluating and saving model, iteration #500...
+2024-08-03 14:24:16 Done!
+2024-08-03 14:25:53 Evaluating and saving model, iteration #600...
+2024-08-03 14:25:56 Done!
+2024-08-03 14:27:33 Evaluating and saving model, iteration #700...
+2024-08-03 14:27:36 Done!
+2024-08-03 14:31:42 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-03 14:31:44 	Done.
+2024-08-03 14:31:44 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-03 14:31:44 	Done!
+2024-08-03 14:31:44 Loading frequency encoding (compiling might take a while)...
+2024-08-03 14:31:44 	Done!
+2024-08-03 14:31:44 Loaded grid NeRF, #parameters: 12268286
+2024-08-03 14:31:44 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-03 14:31:44 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-03 14:31:44 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-03 14:31:46 	 successfully loaded stable diffusion!
+2024-08-03 14:31:51 Loaded DeepFloyd IF
+2024-08-03 14:31:54 Loaded DeepFloyd IF
+2024-08-03 14:31:54 Localization prompt: a 3d render of a gray a lego man wearing yellow head
+2024-08-03 14:31:54 Style prompt: a 3d render of a gray a lego man wearing purple head
+2024-08-03 14:31:54 Background prompt: a 3d render of a a lego man wearing yellow head
+2024-08-03 14:31:55 loaded localization model.
+2024-08-03 14:31:55 Successfully initialized lego man localization second_arc
+2024-08-03 14:31:55 Starting training ^_^
+2024-08-03 14:41:39 Evaluating and saving model, iteration #100...
+2024-08-03 14:41:42 Done!
+2024-08-03 14:43:19 Evaluating and saving model, iteration #200...
+2024-08-03 14:43:22 Done!
+2024-08-03 14:44:59 Evaluating and saving model, iteration #300...
+2024-08-03 14:45:01 Done!
+2024-08-03 14:46:38 Evaluating and saving model, iteration #400...
+2024-08-03 14:46:41 Done!
+2024-08-03 14:48:18 Evaluating and saving model, iteration #500...
+2024-08-03 14:48:21 Done!
+2024-08-03 14:49:58 Evaluating and saving model, iteration #600...
+2024-08-03 14:50:01 Done!
+2024-08-03 14:51:38 Evaluating and saving model, iteration #700...
+2024-08-03 14:51:40 Done!
+2024-08-03 14:53:17 Evaluating and saving model, iteration #800...
+2024-08-03 14:53:20 Done!
+2024-08-03 14:54:57 Evaluating and saving model, iteration #900...
+2024-08-03 14:55:00 Done!
+2024-08-03 14:56:37 Evaluating and saving model, iteration #1000...
+2024-08-03 14:56:39 Done!
+2024-08-03 14:58:17 Evaluating and saving model, iteration #1100...
+2024-08-03 14:58:19 Done!
+2024-08-03 14:59:56 Evaluating and saving model, iteration #1200...
+2024-08-03 14:59:59 Done!
+2024-08-03 15:08:21 Loading CUDA ray marching module (compiling might take a while)...
+2024-08-03 15:08:23 	Done.
+2024-08-03 15:08:23 Loading tiledgrid encoding (compiling might take a while)...
+2024-08-03 15:08:23 	Done!
+2024-08-03 15:08:23 Loading frequency encoding (compiling might take a while)...
+2024-08-03 15:08:23 	Done!
+2024-08-03 15:08:23 Loaded grid NeRF, #parameters: 12268286
+2024-08-03 15:08:23 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=3, bias=True)
+    )
+  )
+)
+2024-08-03 15:08:23 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-08-03 15:08:23 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-08-03 15:08:25 	 successfully loaded stable diffusion!
+2024-08-03 15:08:30 Loaded DeepFloyd IF
+2024-08-03 15:08:33 Loaded DeepFloyd IF
+2024-08-03 15:08:33 Localization prompt: a 3d render of a gray a lego man with yellow shoes
+2024-08-03 15:08:33 Style prompt: a 3d render of a gray a lego man with purple shoes
+2024-08-03 15:08:33 Background prompt: a 3d render of a a lego man with yellow shoes
+2024-08-03 15:08:34 loaded localization model.
+2024-08-03 15:08:34 Successfully initialized lego man localization second_arc
+2024-08-03 15:08:34 Starting training ^_^
+2024-08-03 15:10:11 Evaluating and saving model, iteration #100...
+2024-08-03 15:10:14 Done!
+2024-08-03 15:11:51 Evaluating and saving model, iteration #200...
+2024-08-03 15:11:54 Done!
+2024-08-03 15:13:31 Evaluating and saving model, iteration #300...
+2024-08-03 15:13:33 Done!
+2024-08-03 15:15:10 Evaluating and saving model, iteration #400...
+2024-08-03 15:15:13 Done!

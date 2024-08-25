@@ -1,0 +1,10 @@
+log:
+  exp_name: 'hand'
+guide:
+  text: 'a gray hand'
+  shape_path: shapes/hand_prismatic.obj
+optim:
+  iters: 5000
+  seed: 10
+render:
+  nerf_type: 'latent'

@@ -1,0 +1,1104 @@
+<<<<<<< HEAD
+2024-07-05 01:23:29 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 01:29:24 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 01:57:18 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 02:05:50 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 02:10:46 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 02:35:06 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 02:39:12 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 02:39:52 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 02:42:49 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 02:43:04 	Done.
+2024-07-05 02:43:04 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 02:43:04 	Done!
+2024-07-05 02:43:04 Loading frequency encoding (compiling might take a while)...
+2024-07-05 02:43:04 	Done!
+2024-07-05 02:43:04 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 02:43:04 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 02:43:04 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 02:43:04 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 02:43:07 	 successfully loaded stable diffusion!
+2024-07-05 02:43:07 Successfully initialized sand_castle
+2024-07-05 02:43:07 Starting training ^_^
+2024-07-05 02:43:07 Evaluating and saving model, iteration #0...
+2024-07-05 03:28:11 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:30:30 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:32:54 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:37:41 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:38:26 	Done.
+2024-07-05 03:38:26 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 03:38:26 	Done!
+2024-07-05 03:38:26 Loading frequency encoding (compiling might take a while)...
+2024-07-05 03:38:26 	Done!
+2024-07-05 03:38:26 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 03:38:26 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 03:38:26 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 03:38:26 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 03:38:29 	 successfully loaded stable diffusion!
+2024-07-05 03:38:30 Successfully initialized sand_castle
+2024-07-05 03:38:30 Starting training ^_^
+2024-07-05 03:38:30 Evaluating and saving model, iteration #0...
+2024-07-05 03:46:24 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:47:05 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:51:12 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:54:17 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:56:21 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 03:57:17 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 04:01:33 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 04:34:57 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 04:42:41 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 04:45:28 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 04:50:18 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 04:53:34 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 04:58:00 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:03:45 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:04:54 	Done.
+2024-07-05 05:04:54 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:04:54 	Done!
+2024-07-05 05:04:54 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:04:54 	Done!
+2024-07-05 05:04:55 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:04:55 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:04:55 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:04:55 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:04:56 	 successfully loaded stable diffusion!
+2024-07-05 05:04:57 Successfully initialized sand_castle
+2024-07-05 05:04:57 Starting training ^_^
+2024-07-05 05:05:15 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:06:24 	Done.
+2024-07-05 05:06:24 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:06:24 	Done!
+2024-07-05 05:06:24 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:06:24 	Done!
+2024-07-05 05:06:24 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:06:24 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:06:24 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:06:24 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:06:26 	 successfully loaded stable diffusion!
+2024-07-05 05:06:26 Successfully initialized sand_castle
+2024-07-05 05:06:26 Starting training ^_^
+2024-07-05 05:07:00 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:07:01 	Done.
+2024-07-05 05:07:01 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:07:01 	Done!
+2024-07-05 05:07:01 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:07:01 	Done!
+2024-07-05 05:07:01 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:07:01 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:07:01 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:07:01 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:07:03 	 successfully loaded stable diffusion!
+2024-07-05 05:07:03 Successfully initialized sand_castle
+2024-07-05 05:07:03 Starting training ^_^
+2024-07-05 05:08:03 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:09:14 	Done.
+2024-07-05 05:09:14 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:09:14 	Done!
+2024-07-05 05:09:14 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:09:14 	Done!
+2024-07-05 05:09:14 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:09:14 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:09:14 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:09:14 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:09:16 	 successfully loaded stable diffusion!
+2024-07-05 05:09:17 Successfully initialized sand_castle
+2024-07-05 05:09:17 Starting training ^_^
+2024-07-05 05:11:44 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:11:46 	Done.
+2024-07-05 05:11:46 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:11:47 	Done!
+2024-07-05 05:11:47 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:11:47 	Done!
+2024-07-05 05:11:47 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:11:47 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:11:47 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:11:47 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:11:49 	 successfully loaded stable diffusion!
+2024-07-05 05:11:50 Successfully initialized sand_castle
+2024-07-05 05:11:50 Starting training ^_^
+2024-07-05 05:21:40 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:21:42 	Done.
+2024-07-05 05:21:42 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:21:42 	Done!
+2024-07-05 05:21:42 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:21:42 	Done!
+2024-07-05 05:21:42 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:21:42 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:21:42 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:21:42 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:21:45 	 successfully loaded stable diffusion!
+2024-07-05 05:21:45 Successfully initialized sand_castle
+2024-07-05 05:21:45 Starting training ^_^
+2024-07-05 05:23:52 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:23:54 	Done.
+2024-07-05 05:23:54 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:23:54 	Done!
+2024-07-05 05:23:54 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:23:54 	Done!
+2024-07-05 05:23:54 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:23:54 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:23:54 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:23:54 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:23:56 	 successfully loaded stable diffusion!
+2024-07-05 05:23:57 Successfully initialized sand_castle
+2024-07-05 05:23:57 Starting training ^_^
+2024-07-05 05:26:23 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:26:25 	Done.
+2024-07-05 05:26:25 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:26:25 	Done!
+2024-07-05 05:26:25 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:26:25 	Done!
+2024-07-05 05:26:26 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:26:26 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:26:26 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:26:26 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:26:28 	 successfully loaded stable diffusion!
+2024-07-05 05:26:28 Successfully initialized sand_castle
+2024-07-05 05:26:28 Starting training ^_^
+2024-07-05 05:27:20 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:27:21 	Done.
+2024-07-05 05:27:21 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:27:22 	Done!
+2024-07-05 05:27:22 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:27:22 	Done!
+2024-07-05 05:27:22 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:27:22 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:27:22 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:27:22 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:27:24 	 successfully loaded stable diffusion!
+2024-07-05 05:27:24 Successfully initialized sand_castle
+2024-07-05 05:27:24 Starting training ^_^
+2024-07-05 05:27:50 Evaluating and saving model, iteration #100...
+2024-07-05 05:29:02 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:29:04 	Done.
+2024-07-05 05:29:04 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:29:04 	Done!
+2024-07-05 05:29:04 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:29:04 	Done!
+2024-07-05 05:29:04 Loaded grid NeRF, #parameters: 12268546
+2024-07-05 05:29:04 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (localization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=1, bias=True)
+    )
+  )
+  (stylization_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+  (background_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:29:04 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:29:04 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:29:06 	 successfully loaded stable diffusion!
+2024-07-05 05:29:07 Successfully initialized sand_castle
+2024-07-05 05:29:07 Starting training ^_^
+2024-07-05 05:29:33 Evaluating and saving model, iteration #100...
+2024-07-05 05:36:49 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:36:51 	Done.
+2024-07-05 05:36:51 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:36:51 	Done!
+2024-07-05 05:36:51 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:36:51 	Done!
+2024-07-05 05:36:51 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 05:36:51 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:36:51 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:36:51 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:36:53 	 successfully loaded stable diffusion!
+2024-07-05 05:36:54 Successfully initialized sand_castle
+2024-07-05 05:36:54 Starting training ^_^
+2024-07-05 05:36:54 Evaluating and saving model, iteration #0...
+2024-07-05 05:45:06 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:45:08 	Done.
+2024-07-05 05:45:08 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:45:08 	Done!
+2024-07-05 05:45:08 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:45:08 	Done!
+2024-07-05 05:45:08 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 05:45:08 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:45:08 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:45:08 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:45:10 	 successfully loaded stable diffusion!
+2024-07-05 05:45:11 Successfully initialized sand_castle
+2024-07-05 05:45:11 Starting training ^_^
+2024-07-05 05:45:11 Evaluating and saving model, iteration #0...
+2024-07-05 05:49:23 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:49:25 	Done.
+2024-07-05 05:49:25 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:49:25 	Done!
+2024-07-05 05:49:25 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:49:25 	Done!
+2024-07-05 05:49:25 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 05:49:25 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:49:25 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:49:25 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:49:27 	 successfully loaded stable diffusion!
+2024-07-05 05:49:28 Successfully initialized sand_castle
+2024-07-05 05:49:28 Starting training ^_^
+2024-07-05 05:49:28 Evaluating and saving model, iteration #0...
+2024-07-05 05:51:50 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:51:52 	Done.
+2024-07-05 05:51:52 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:51:52 	Done!
+2024-07-05 05:51:52 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:51:52 	Done!
+2024-07-05 05:51:53 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 05:51:53 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:51:53 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:51:53 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:51:54 	 successfully loaded stable diffusion!
+2024-07-05 05:51:55 Successfully initialized sand_castle
+2024-07-05 05:51:55 Starting training ^_^
+2024-07-05 05:51:55 Evaluating and saving model, iteration #0...
+2024-07-05 05:52:02 Done!
+2024-07-05 05:55:15 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:55:17 	Done.
+2024-07-05 05:55:17 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:55:17 	Done!
+2024-07-05 05:55:17 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:55:17 	Done!
+2024-07-05 05:55:18 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 05:55:18 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:55:18 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:55:18 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:55:19 	 successfully loaded stable diffusion!
+2024-07-05 05:55:20 Successfully initialized sand_castle
+2024-07-05 05:55:20 Starting training ^_^
+2024-07-05 05:55:20 Evaluating and saving model, iteration #0...
+2024-07-05 05:55:27 Done!
+2024-07-05 05:57:46 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:57:49 	Done.
+2024-07-05 05:57:49 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:57:49 	Done!
+2024-07-05 05:57:49 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:57:49 	Done!
+2024-07-05 05:57:49 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 05:57:49 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:57:49 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:57:49 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:57:51 	 successfully loaded stable diffusion!
+2024-07-05 05:57:51 Successfully initialized sand_castle
+2024-07-05 05:57:51 Starting training ^_^
+2024-07-05 05:57:51 Evaluating and saving model, iteration #0...
+2024-07-05 05:57:58 Done!
+2024-07-05 05:58:39 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 05:58:40 	Done.
+2024-07-05 05:58:40 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 05:58:40 	Done!
+2024-07-05 05:58:40 Loading frequency encoding (compiling might take a while)...
+2024-07-05 05:58:40 	Done!
+2024-07-05 05:58:40 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 05:58:40 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-05 05:58:40 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 05:58:40 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 05:58:42 	 successfully loaded stable diffusion!
+2024-07-05 05:58:43 Successfully initialized sand_castle
+2024-07-05 05:58:43 Starting training ^_^
+2024-07-05 05:58:43 Evaluating and saving model, iteration #0...
+2024-07-05 05:58:50 Done!
+2024-07-12 03:49:54 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 03:49:56 	Done.
+2024-07-12 03:49:56 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 03:49:56 	Done!
+2024-07-12 03:49:56 Loading frequency encoding (compiling might take a while)...
+2024-07-12 03:49:56 	Done!
+2024-07-12 03:49:56 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 03:49:56 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-12 03:49:56 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 03:49:56 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 03:49:58 	 successfully loaded stable diffusion!
+2024-07-12 03:49:59 Successfully initialized sand_castle
+2024-07-12 03:49:59 Starting training ^_^
+2024-07-12 03:49:59 Evaluating and saving model, iteration #0...
+2024-07-12 03:50:05 Done!
+2024-07-12 03:51:35 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 03:51:37 	Done.
+2024-07-12 03:51:37 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 03:51:37 	Done!
+2024-07-12 03:51:37 Loading frequency encoding (compiling might take a while)...
+2024-07-12 03:51:37 	Done!
+2024-07-12 03:51:37 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 03:51:37 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-12 03:51:37 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 03:51:37 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 03:51:39 	 successfully loaded stable diffusion!
+2024-07-12 03:51:40 Successfully initialized sand_castle
+2024-07-12 03:51:40 Starting training ^_^
+2024-07-12 03:51:40 Evaluating and saving model, iteration #0...
+2024-07-12 03:51:46 Done!
+2024-07-12 03:53:19 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 03:53:21 	Done.
+2024-07-12 03:53:21 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 03:53:21 	Done!
+2024-07-12 03:53:21 Loading frequency encoding (compiling might take a while)...
+2024-07-12 03:53:21 	Done!
+2024-07-12 03:53:21 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 03:53:21 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-12 03:53:21 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 03:53:21 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 03:53:23 	 successfully loaded stable diffusion!
+2024-07-12 03:53:43 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 03:53:44 	Done.
+2024-07-12 03:53:44 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 03:53:44 	Done!
+2024-07-12 03:53:44 Loading frequency encoding (compiling might take a while)...
+2024-07-12 03:53:44 	Done!
+2024-07-12 03:53:44 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 03:53:44 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-12 03:53:44 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 03:53:44 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 03:53:46 	 successfully loaded stable diffusion!
+2024-07-12 04:02:17 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 04:02:19 	Done.
+2024-07-12 04:02:19 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 04:02:19 	Done!
+2024-07-12 04:02:19 Loading frequency encoding (compiling might take a while)...
+2024-07-12 04:02:19 	Done!
+2024-07-12 04:02:19 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 04:02:19 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-12 04:02:19 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 04:02:19 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 04:02:21 	 successfully loaded stable diffusion!
+2024-07-12 04:02:21 Successfully initialized sand_castle
+2024-07-12 04:02:21 Starting training ^_^
+2024-07-12 04:02:21 Evaluating and saving model, iteration #0...
+2024-07-12 04:02:28 Done!
+2024-07-12 05:54:17 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 05:54:19 	Done.
+2024-07-12 05:54:19 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 05:54:19 	Done!
+2024-07-12 05:54:19 Loading frequency encoding (compiling might take a while)...
+2024-07-12 05:54:19 	Done!
+2024-07-12 05:54:19 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 05:54:19 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-12 05:54:19 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 05:54:19 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 05:54:21 	 successfully loaded stable diffusion!
+2024-07-12 05:54:21 Successfully initialized sand_castle
+2024-07-12 05:54:21 Starting training ^_^
+2024-07-12 05:54:29 Evaluating and saving model, iteration #0...
+2024-07-12 05:54:35 Done!
+2024-07-12 05:57:47 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 05:57:49 	Done.
+2024-07-12 05:57:49 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 05:57:49 	Done!
+2024-07-12 05:57:49 Loading frequency encoding (compiling might take a while)...
+2024-07-12 05:57:49 	Done!
+2024-07-12 05:57:49 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 05:57:49 NeRFNetwork(
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+2024-07-12 05:57:49 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 05:57:49 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 05:57:51 	 successfully loaded stable diffusion!
+2024-07-12 05:57:52 Successfully initialized sand_castle
+2024-07-12 05:57:52 Starting training ^_^
+2024-07-12 05:57:52 Evaluating and saving model, iteration #0...
+2024-07-12 05:57:58 Done!
+2024-07-12 05:59:31 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-12 05:59:33 	Done.
+2024-07-12 05:59:33 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-12 05:59:33 	Done!
+2024-07-12 05:59:33 Loading frequency encoding (compiling might take a while)...
+2024-07-12 05:59:33 	Done!
+2024-07-12 05:59:33 Loaded grid NeRF, #parameters: 12249145
+2024-07-12 05:59:33 NeRFNetwork(
+=======
+2024-07-05 06:20:56 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 06:25:57 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 06:29:55 Loading CUDA ray marching module (compiling might take a while)...
+2024-07-05 06:31:04 	Done.
+2024-07-05 06:31:04 Loading tiledgrid encoding (compiling might take a while)...
+2024-07-05 06:31:04 	Done!
+2024-07-05 06:31:04 Loading frequency encoding (compiling might take a while)...
+2024-07-05 06:31:04 	Done!
+2024-07-05 06:31:04 Loaded grid NeRF, #parameters: 12249145
+2024-07-05 06:31:04 NeRFNetwork(
+>>>>>>> 0205b52a3cccd59d26863b77b78b56ad9b95e70c
+  (encoder): GridEncoder: input_dim=3 num_levels=16 level_dim=2 resolution=16 -> 2048 per_level_scale=1.3819 params=(6119864, 2) gridtype=tiled align_corners=False
+  (sigma_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=32, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=64, bias=True)
+      (2): Linear(in_features=64, out_features=5, bias=True)
+    )
+  )
+  (encoder_bg): FreqEncoder: input_dim=3 degree=6 output_dim=39
+  (bg_net): MLP(
+    (net): ModuleList(
+      (0): Linear(in_features=39, out_features=64, bias=True)
+      (1): Linear(in_features=64, out_features=4, bias=True)
+    )
+  )
+)
+<<<<<<< HEAD
+2024-07-12 05:59:33 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-12 05:59:33 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-12 05:59:35 	 successfully loaded stable diffusion!
+2024-07-12 05:59:36 Successfully initialized sand_castle
+2024-07-12 05:59:36 Starting training ^_^
+2024-07-12 05:59:36 Evaluating and saving model, iteration #0...
+2024-07-12 05:59:42 Done!
+=======
+2024-07-05 06:31:04 try to load hugging face access token from the default place, make sure you have run `huggingface-cli login`.
+2024-07-05 06:31:04 loading stable diffusion with CompVis/stable-diffusion-v1-4...
+2024-07-05 06:31:06 	 successfully loaded stable diffusion!
+2024-07-05 06:31:06 Successfully initialized sand_castle
+2024-07-05 06:31:06 Starting training ^_^
+2024-07-05 06:31:06 Evaluating and saving model, iteration #0...
+>>>>>>> 0205b52a3cccd59d26863b77b78b56ad9b95e70c

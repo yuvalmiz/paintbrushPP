@@ -19,6 +19,11 @@ class NeRFNetwork(NeRFRenderer):
 
         super().__init__(cfg, latent_mode=cfg.nerf_type == NeRFType.latent)
 
+
+        self.train_localization = cfg.train_localization
+        self.csd = cfg.csd
+        self.third_arc = cfg.third_arc
+        # self.localization_dim = cfg.localization_dim
         self.num_layers = num_layers
         self.hidden_dim = hidden_dim
         additional_dim_size = 1 if self.latent_mode else 0
@@ -39,15 +44,14 @@ class NeRFNetwork(NeRFRenderer):
 
         else:
             self.bg_net = None
-        
-        if cfg.train_localization:
-            self.train_localization = True
-            self.localization_net = MLP(self.in_dim, 1, hidden_dim, num_layers, bias=True) # TODO change output to sigmoid
+    
+        if self.train_localization:
             stylization_beckground_output_dim = 4 + additional_dim_size - 1
-            self.stylization_net = MLP(self.in_dim, stylization_beckground_output_dim, hidden_dim , num_layers, bias=True) # TODO change output to sigmoid
-            self.background_net = MLP(self.in_dim, stylization_beckground_output_dim, hidden_dim, num_layers, bias=True) # TODO change output to sigmoid
-        else:
-            self.train_localization = False
+            # localization_dim = 1 if self.localization_dim else 1 + 2 * stylization_beckground_output_dim
+
+            self.localization_net = MLP(self.in_dim, 1, hidden_dim, num_layers, bias=True)
+            self.stylization_net = MLP(self.in_dim, stylization_beckground_output_dim, hidden_dim , num_layers, bias=True)
+            self.background_net = MLP(self.in_dim, stylization_beckground_output_dim, hidden_dim, num_layers, bias=True)
 
 
         if cfg.nerf_type == NeRFType.latent_tune:
@@ -65,40 +69,62 @@ class NeRFNetwork(NeRFRenderer):
 
         return g
 
-    def common_forward(self, x):
+    def common_forward_localization(self, x):
         # x: [N, 3], in [-bound, bound]
 
         # sigma
         h = self.encoder(x, bound=self.bound)
-        h_origin = self.sigma_net(h)
-        loc_prob, style_rgbs, back_rgbs = None, None, None
-        
-        if self.train_localization:
-            h_localization = self.localization_net(h)
-            h_stylization = self.stylization_net(h)
-            h_background = self.background_net(h)
-            loc_prob = trunc_exp(h_localization)
-            style_rgbs = h_stylization
-            back_rgbs = h_background
-            if self.decoder_layer is not None:
-                style_rgbs = self.decoder_layer(style_rgbs)
-                style_rgbs = (style_rgbs + 1) / 2
-                back_rgbs = self.decoder_layer(back_rgbs)
-                back_rgbs = (back_rgbs + 1) / 2
-            elif not self.latent_mode:
-                style_rgbs = torch.sigmoid(h_stylization)
-                back_rgbs = torch.sigmoid(h_background)
+
+        h_origin = self.sigma_net(h)        
+        h_localization = self.localization_net(h)
+        h_stylization = self.stylization_net(h)
+        h_background = self.background_net(h)
+        # TODO: WHO ARE HERE
+        # if self.localization_dim:
+        #     loc_prob = torch.sigmoid(h_localization[..., 0])
+        loc_prob = torch.sigmoid(h_localization)
+        style_rgbs = h_stylization
+        back_rgbs = h_background
             
         sigma = trunc_exp(h_origin[..., 0] + self.gaussian(x))
+
+        if self.third_arc:
+            loc_prob = trunc_exp(h_localization[..., 0] + self.gaussian(x))
+
         albedo = h_origin[..., 1:]
 
         if self.decoder_layer is not None:
             albedo = self.decoder_layer(albedo)
             albedo = (albedo + 1) / 2
+            style_rgbs = self.decoder_layer(style_rgbs)
+            style_rgbs = (style_rgbs + 1) / 2
+            back_rgbs = self.decoder_layer(back_rgbs)
+            back_rgbs = (back_rgbs + 1) / 2
         elif not self.latent_mode:
             albedo = torch.sigmoid(h_origin[..., 1:])
+            style_rgbs = torch.sigmoid(h_stylization)
+            back_rgbs = torch.sigmoid(h_background)
 
         return sigma, albedo , loc_prob, style_rgbs, back_rgbs
+
+
+    def common_forward(self, x):
+        # x: [N, 3], in [-bound, bound]
+
+        # sigma
+        h = self.encoder(x, bound=self.bound)
+
+        h = self.sigma_net(h)
+
+        sigma = trunc_exp(h[..., 0] + self.gaussian(x))
+        albedo = h[..., 1:]
+        if self.decoder_layer is not None:
+            albedo = self.decoder_layer(albedo)
+            albedo = (albedo + 1) / 2
+        elif not self.latent_mode:
+            albedo = torch.sigmoid(h[..., 1:])
+
+        return sigma, albedo
 
     # ref: https://github.com/zhaofuq/Instant-NSR/blob/main/nerf/network_sdf.py#L192
     def finite_difference_normal(self, x, epsilon=1e-2):
@@ -132,13 +158,19 @@ class NeRFNetwork(NeRFRenderer):
 
         if shading == 'albedo':
             # no need to query normal
-            sigma, color = self.common_forward(x)
-            normal = None
+            if self.train_localization:
+                sigma, color , loc_prob, style_rgbs, back_rgbs = self.common_forward_localization(x)
+                normal = None
+            else:
+                sigma, color = self.common_forward(x)
+                normal = None
 
         else:
             # query normal
-
-            sigma, albedo = self.common_forward(x)
+            if self.train_localization:
+                sigma, albedo , loc_prob, style_rgbs, back_rgbs = self.common_forward_localization(x)
+            else:
+                sigma, albedo = self.common_forward(x)
             normal = self.finite_difference_normal(x)
 
             # normalize...
@@ -150,20 +182,46 @@ class NeRFNetwork(NeRFRenderer):
 
             if shading == 'textureless':
                 color = lambertian.unsqueeze(-1).repeat(1, 3)
+                if self.train_localization:
+                    style_rgbs = color
+                    back_rgbs = color
             elif shading == 'normal':
                 color = (normal + 1) / 2
+                if self.train_localization:
+                    style_rgbs = color
+                    back_rgbs = color
             else:  # 'lambertian'
                 color = albedo * lambertian.unsqueeze(-1)
-
+                if self.train_localization:
+                    style_rgbs = style_rgbs * lambertian.unsqueeze(-1)
+                    back_rgbs = back_rgbs * lambertian.unsqueeze(-1)
             if self.latent_mode:
                 # pad color with a single dimension of zeros
                 color = torch.cat([color, torch.zeros((color.shape[0], 1), device=color.device)], axis=1)
+                if self.train_localization:
+                    style_rgbs = torch.cat([style_rgbs, torch.zeros((style_rgbs.shape[0], 1), device=style_rgbs.device)], axis=1)
+                    back_rgbs = torch.cat([back_rgbs, torch.zeros((back_rgbs.shape[0], 1), device=back_rgbs.device)], axis=1)
 
-        return sigma, color, normal
+        ret = (sigma, color, normal)
+        if self.train_localization:
+            ret = (sigma, color, normal , loc_prob, style_rgbs, back_rgbs)
+        return ret
 
-    def density(self, x):
+    def density_localization(self, x):
         # x: [N, 3], in [-bound, bound]
+        # TODO- understand when should i use common_forward_localization
+        sigma, albedo , loc_prob, style_rgbs, back_rgbs = self.common_forward_localization(x)
 
+        return {
+            'sigma': sigma,
+            'albedo': albedo,
+            'loc_prob': loc_prob,
+            'style_rgbs': style_rgbs,
+            'back_rgbs': back_rgbs
+        }
+    
+    def density(self, x):
+        
         sigma, albedo = self.common_forward(x)
 
         return {
@@ -204,5 +262,10 @@ class NeRFNetwork(NeRFRenderer):
             params.append({'params': self.localization_net.parameters(), 'lr': lr})
             params.append({'params': self.stylization_net.parameters(), 'lr': lr})
             params.append({'params': self.background_net.parameters(), 'lr': lr})
+        if self.csd:
+            params = []
+            params.append({'params': self.localization_net.parameters()})
+            params.append({'params': self.stylization_net.parameters()})
+            params.append({'params': self.background_net.parameters()})
 
         return params
